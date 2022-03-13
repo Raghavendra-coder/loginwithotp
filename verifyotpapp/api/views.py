@@ -64,6 +64,7 @@ class VerifyOTPView(APIView):
             token = jwt_encode_handler(payload)
             response = {'status': True,'token': token}
 
+
             #sending mail
 
             sender = "rkeshari50@gmail.com"
@@ -77,7 +78,8 @@ class VerifyOTPView(APIView):
             server.login(sender, password)
             print('login Successful')
             server.sendmail(sender, reciever, f"OTP verified. Your token is - {token}")
-
+            otp_qry = OTP.objects.filter(email=serializer.validated_data['email'])
+            otp_qry.delete()
 
         else:
             response = serializer.errors
