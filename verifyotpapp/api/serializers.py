@@ -10,7 +10,7 @@ class GetOTPSerializer(serializers.ModelSerializer):
         fields = ('email',)
 
     def validate_email(self, value):
-
+        print('11111111111111111111111222222222222222222')
         email = value
         user = User.objects.filter(email=email).first()
         if not user:
@@ -30,7 +30,6 @@ class GetOTPSerializer(serializers.ModelSerializer):
             saved_time = f'{saved_time_h}:{saved_time_m}:{saved_time_s}'
             FMT = '%H:%M:%S'
             time_diff = datetime.strptime(current_time, FMT) - datetime.strptime(saved_time, FMT)
-
             if time_diff.seconds < 60:
                 raise serializers.ValidationError(f"Resend OTP will be enabled after {60-time_diff.seconds} seconds")
             otp_qry.updated_at = datetime.now()

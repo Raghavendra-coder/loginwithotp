@@ -24,7 +24,7 @@ class GetOTPView(APIView):
             otp = random.randint(0, 9999)
             if otp < 1000:
                 otp = f'{otp:04}'
-            updated_at = datetime.datetime.now().date()
+            updated_at = datetime.datetime.now()
             otp_qry = OTP.objects.filter(email=serializer.validated_data['email'])
             otp_qry.delete()
             serializer.save(otp=otp, updated_at=updated_at)
